@@ -1,0 +1,36 @@
+﻿@model CarRentalApp.Models.Payment
+
+@{
+    ViewData["Title"] = "Process Payment";
+}
+
+<h2>Process Payment</h2>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label>Customer</label>
+        <input type="text" class="form-control" value="@ViewBag.CustomerName" readonly />
+    </div>
+
+    <div class="form-group">
+        <label>Car</label>
+        <input type="text" class="form-control" value="@ViewBag.CarDetails" readonly />
+    </div>
+
+    <div class="form-group">
+        <label>Amount</label>
+        <input asp-for="Amount" class="form-control" readonly />
+    </div>
+
+    <div class="form-group">
+        <label>Payment Method</label>
+        <select asp-for="Method" class="form-control">
+            <option value="Cash">Cash</option>
+            <option value="Credit Card">Credit Card</option>
+            <option value="UPI">UPI</option>
+        </select>
+    </div>
+
+    <input type="hidden" asp-for="RentalId" />
+    <button type="submit" class="btn btn-success mt-3">Confirm Payment</button>
+</form>

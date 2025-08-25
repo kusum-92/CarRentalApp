@@ -1,0 +1,46 @@
+﻿@model IEnumerable<CarRentalApp.Models.Rental>
+
+@{
+    ViewData["Title"] = "Rentals";
+}
+
+<h2>Rentals</h2>
+
+<p>
+    <a class="btn btn-primary" asp-action="Create">Book New Rental</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Car</th>
+            <th>Customer</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Total Cost</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var rental in Model)
+        {
+            <tr>
+                <td>@rental.Car?.Make @rental.Car?.Model</td>
+                <td>@rental.Customer?.Name</td>
+                <td>@rental.StartDate.ToShortDateString()</td>
+                <td>@rental.EndDate.ToShortDateString()</td>
+                <td>@rental.TotalCost</td>
+                <td>@(rental.Status ? "Active" : "Closed")</td>
+                <td>
+                    @if (rental.Status)
+                    {
+                        <a asp-action="CheckIn" asp-route-id="@rental.Id" class="btn btn-warning btn-sm">Check In</a>
+                        <a asp-action="CheckOut" asp-route-id="@rental.Id" class="btn btn-success btn-sm">Check Out</a>
+                        <a asp-action="Cancel" asp-route-id="@rental.Id" class="btn btn-danger btn-sm">Cancel</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Home - Car Rental Management System";
+}
+
+<div class="container mt-4">
+
+    <!-- Hero Section -->
+    <div class="text-center p-5 bg-light rounded shadow-sm">
+        <h1>🚗 Car Rental Management System</h1>
+        <p class="lead">Manage Cars, Customers, Rentals, and Payments with ease.</p>
+        <a class="btn btn-primary mt-3" asp-controller="Car" asp-action="Index">Browse Cars</a>
+    </div>
+
+    <!-- Featured Cars -->
+    <div class="mt-5">
+        <h3 class="text-center mb-4">Featured Cars</h3>
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <img src="~/images/corollahatch-1-scaled.webp"
+                     alt="Car 1" class="img-fluid rounded shadow-sm">
+                <p class="mt-2">Toyota Corolla</p>
+            </div>
+            <div class="col-md-4 text-center">
+                <img src="~/images/Audi-A6-1.webp"
+                     alt="Car 2" class="img-fluid rounded shadow-sm">
+                <p class="mt-2">Audi A6</p>
+            </div>
+            <div class="col-md-4 text-center">
+                <img src="~/images/2024-ford-mustang-gt-exterior-front-quarter.jpg"
+                     alt="Car 3" class="img-fluid rounded shadow-sm">
+                <p class="mt-2">Ford Mustang</p>
+            </div>
+        </div>
+    </div>
+
+</div>

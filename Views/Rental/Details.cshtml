@@ -1,0 +1,28 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model CarRentalApp.Models.Rental
+
+@{
+    ViewData["Title"] = "Rental Details";
+}
+
+<h2>Rental Details</h2>
+
+<div class="card">
+    <div class="card-body">
+        <p><strong>Car:</strong> @Model.Car?.Make @Model.Car?.Model</p>
+        <p><strong>Customer:</strong> @Model.Customer?.Name</p>
+        <p><strong>Start Date:</strong> @Model.StartDate.ToShortDateString()</p>
+        <p><strong>End Date:</strong> @Model.EndDate.ToShortDateString()</p>
+        <p><strong>Total Cost:</strong> @Model.TotalCost</p>
+        <p><strong>Status:</strong> @(Model.Status ? "Active" : "Completed")</p>
+    </div>
+</div>
+
+<p>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</p>

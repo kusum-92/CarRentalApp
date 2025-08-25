@@ -1,0 +1,29 @@
+﻿@model IEnumerable<CarRentalApp.Models.Payment>
+
+@{
+    ViewData["Title"] = "Payments";
+}
+
+<h2>Payments</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Rental Id</th>
+            <th>Amount</th>
+            <th>Payment Date</th>
+            <th>Method</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var payment in Model)
+        {
+            <tr>
+                <td>@payment.RentalId</td>
+                <td>@payment.Amount</td>
+                <td>@payment.PaymentDate.ToShortDateString()</td>
+                <td>@payment.Method</td>
+            </tr>
+        }
+    </tbody>
+</table>
