@@ -16,7 +16,12 @@ namespace CarRentalApp.Controllers
             _rentalRepo = rentalRepo;
             _context = context;
         }
-
+        public async Task<IActionResult> Details(int id)
+        {
+            var rental = await _rentalRepo.GetByIdAsync(id);
+            if (rental == null) return NotFound();
+            return View(rental);
+        }
         // Show all rentals
         public async Task<IActionResult> Index()
         {
@@ -47,7 +52,7 @@ namespace CarRentalApp.Controllers
         public async Task<IActionResult> CheckIn(int id)
         {
             await _rentalRepo.CheckInAsync(id);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Details","Rental", new { id = id });
         }
 
         // CheckOut
@@ -67,5 +72,36 @@ namespace CarRentalApp.Controllers
             await _rentalRepo.CancelAsync(id);
             return RedirectToAction(nameof(Index));
         }
+
+    //    public async Task<IActionResult> Edit(int id)
+    //    {
+    //        var rental=_rentalRepo.GetByIdAsync(id);
+    //        if (rental == null) return NotFound();  return View(rental);
+
+    //    }
+    //    [HttpPost]
+    //    [ValidateAntiForgeryToken]
+    //    public async Task<IActionResult> Edit(int id, Rental rental])
+    //    {
+    //     if (id != Rental.Id) return BadRequest();
+    //        if (!ModelState.IsValid) 
+    //        {return View(rental);}
+    //        await _rentalRepo.UpdateAsync(rental);
+    //        return RedirectToAction(nameof(Index));
+    //}
+    public async Task<IActionResult> Edit(int id)
+{
+    var rental = await _rentalRepo.GetByIdAsync(id);
+    return rental == null ? NotFound() : View(rental);
+}
+
+[HttpPost]
+public async Task<IActionResult> Edit(int id, Rental rental)
+{
+    if (id != rental.Id) return BadRequest();
+    if (!ModelState.IsValid) return View(rental);
+    await _rentalRepo.UpdateAsync(rental);
+    return RedirectToAction(nameof(Index));
+}
     }
 }

@@ -16,6 +16,7 @@ namespace CarRentalApp.Controllers
         public IActionResult Create() => View(new Car());
 
         [HttpPost]
+
         public async Task<IActionResult> Create(Car car)
         {
             if (!ModelState.IsValid) return View(car);
