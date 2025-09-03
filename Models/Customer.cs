@@ -1,5 +1,7 @@
 ﻿// Models/Customer.cs
+using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CarRentalApp.Models
 {
@@ -19,5 +21,13 @@ namespace CarRentalApp.Models
 
         [Required, MaxLength(30)]
         public string LicenseNumber { get; set; } = "";
+
+        public string UserId { get; set; } = "";
+
+        //navigation
+       
+        public IdentityUser? User { get; set; }
     }
+
+
 }

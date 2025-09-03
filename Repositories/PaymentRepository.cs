@@ -57,5 +57,13 @@ namespace CarRentalApp.Repositories
                 .Where(p => p.RentalId == rentalId)
                 .ToListAsync();
         }
+        public async Task<IEnumerable<Payment>> GetPaymentsByCustomerIdAsync(int customerId)
+        {
+            return await _context.Payments
+                .Include(p => p.Rental)
+                .ThenInclude(r => r.Car)
+                .Where(p => p.Rental.CustomerId == customerId)
+                .ToListAsync();
+        }
     }
 }

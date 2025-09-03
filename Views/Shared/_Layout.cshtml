@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -6,15 +10,12 @@
     <title>@ViewData["Title"] - CarRentalApp</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-    @* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script> *@
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-controller="Car" asp-action="Index">🚗 Car Rental</a>
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">🚗 Car Rental</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -22,18 +23,75 @@
 
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Car" asp-action="Index">Cars</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Customer" asp-action="Index">Customers</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Rental" asp-action="Index">Rentals</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Payment" asp-action="Index">Payments</a>
-                        </li>
+                        
+                        
+
+                        <!-- Rentals visible to logged-in users -->
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            if (User.IsInRole("Admin"))
+                            {
+                                <!-- Admin menus -->
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Car" asp-action="Index">Cars</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Rental" asp-action="Index">Rentals</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Customer" asp-action="Index">Customers</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Payment" asp-action="Index">Payments</a>
+                                </li>
+                            }
+
+                        
+
+                      
+                            else
+
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Customer" asp-action="Create">Add details</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Car" asp-action="Index">Cars</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Rental" asp-action="Index">Rentals</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Payment" asp-action="Index">Payments</a>
+                                </li>
+                        }
+                        }
+                    </ul>
+
+                    <ul class="navbar-nav ms-auto">
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <span class="navbar-text text-white me-2">
+                                    Hello, @UserManager.GetUserName(User)!
+                                </span>
+                            </li>
+                            <li class="nav-item">
+                                <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-link nav-link text-white">Logout</button>
+                                </form>
+                            </li>
+                            
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Account" asp-action="Login">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Account" asp-action="Register">Register</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

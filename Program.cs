@@ -1,13 +1,23 @@
 using CarRentalApp.Data;
 using CarRentalApp.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+
 builder.Services.AddDbContext<CarRentalContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("CarCon")));
+
+
+
+
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<CarRentalContext>().AddDefaultTokenProviders();
+builder.Services.AddAuthorization();
 
 builder.Services.AddScoped<ICar, CarRepository>();
 builder.Services.AddScoped<ICustomer, CustomerRepository>();
@@ -15,6 +25,16 @@ builder.Services.AddScoped<IRental, RentalRepository>();
 builder.Services.AddScoped<IPayment, PaymentRepository>();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+
+    await DbSeeder.SeedRolesAsync(roleManager);
+    await DbSeeder.SeedAdminUserAsync(userManager);
+}
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -28,6 +48,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseAuthentication(); //
 
 app.UseAuthorization();
 

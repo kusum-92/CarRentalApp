@@ -13,6 +13,7 @@
 
 <form asp-action="Edit" method="post">
     <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="UserId" />
 
     <div class="mb-3">
         <label asp-for="Name" class="form-label"></label>
@@ -35,5 +36,13 @@
     </div>
 
     <button type="submit" class="btn btn-primary">Update</button>
-    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+
+    @if (User.IsInRole("Admin"))
+    {
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    }
+    else
+    {
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Cancel</a>
+    }
 </form>

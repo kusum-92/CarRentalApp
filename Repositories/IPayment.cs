@@ -8,5 +8,7 @@ namespace CarRentalApp.Repositories
         Task<IEnumerable<Payment>> GetAllPaymentsAsync();
         Task<Payment?> GetPaymentByIdAsync(int id);
         Task<IEnumerable<Payment>> GetPaymentsByRentalIdAsync(int rentalId);
+        Task<IEnumerable<Payment>> GetPaymentsByCustomerIdAsync(int rentalId);
+
     }
 }

@@ -3,15 +3,19 @@
 *@
 @{
 }
+@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<IdentityUser> SignInManager
 @model CarRentalApp.Models.Customer
 
 @{
-    ViewData["Title"] = "Add Customer";
+    ViewData["Title"] = "Add Customer Details";
 }
 
 <h2>Add Customer</h2>
 
 <form asp-action="Create" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
     <div class="mb-3">
         <label asp-for="Name" class="form-label"></label>
         <input asp-for="Name" class="form-control" />
@@ -36,6 +40,12 @@
         <span asp-validation-for="LicenseNumber" class="text-danger"></span>
     </div>
 
-    <button type="submit" class="btn btn-success">Save</button>
-    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    @* <button type="submit" class="btn btn-success">Save</button> *@
+    
+     <button type="submit" class="btn btn-success">Save</button>
+     <a asp-controller ="Home" asp-action="Index" class="btn btn-secondary">Cancel</a>
+   
+    
+  
+    
 </form>

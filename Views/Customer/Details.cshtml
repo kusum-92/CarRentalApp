@@ -22,5 +22,13 @@
 
 <p>
     <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
-    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+
+    @if (User.IsInRole("Admin"))
+    {
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    }
+    else
+    {
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Back to Home</a>
+    }
 </p>

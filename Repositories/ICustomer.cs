@@ -10,5 +10,8 @@ namespace CarRentalApp.Repositories
         Task AddAsync(Customer customer);
         Task UpdateAsync(Customer customer);
         Task DeleteAsync(int id);
+        Task<Customer> GetByUserIdAsync(string UserId);
+        
     }
+
 }

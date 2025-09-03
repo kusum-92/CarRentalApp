@@ -63,8 +63,8 @@ namespace CarRentalApp.Repositories
         public async Task<Rental> BookAsync(int carId, int customerId, DateTime start, DateTime end)
         {
             var car = await _ctx.Cars.FindAsync(carId);
-            if (car is null || !car.IsAvailable)
-                throw new InvalidOperationException("Car not available.");
+            //if (car is null || !car.IsAvailable)
+            //    throw new InvalidOperationException("Car not available.");
 
             var days = Math.Max(1, (end.Date - start.Date).Days);
             var total = days * car.DailyRate;

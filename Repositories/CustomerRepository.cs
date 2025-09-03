@@ -37,5 +37,9 @@ namespace CarRentalApp.Repositories
             _ctx.Customers.Update(customer);
             await _ctx.SaveChangesAsync();
         }
+        public async Task<Customer?> GetByUserIdAsync(string userId)
+        {
+            return await _ctx.Customers.FirstOrDefaultAsync(c => c.UserId == userId);
+        }
     }
 }

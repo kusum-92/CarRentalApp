@@ -11,9 +11,11 @@
 
 <h2>Car List</h2>
 
-<p>
-    <a class="btn btn-primary" asp-action="Create">Add New Car</a>
-</p>
+@if (User.IsInRole("Admin"))
+{
+
+   <p> <a class="btn btn-primary" asp-action="Create">Add New Car</a> </p>
+}
 
 <table class="table table-bordered table-striped">
     <thead>
@@ -47,9 +49,18 @@
                     }
                 </td>
                 <td>
-                    <a class="btn btn-sm btn-info" asp-action="Edit" asp-route-id="@car.Id">Edit</a>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a class="btn btn-sm btn-info" asp-action="Edit" asp-route-id="@car.Id">Edit</a>
+                        <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@car.Id">Delete</a>
+                    }
+               
                     <a class="btn btn-sm btn-secondary" asp-action="Details" asp-route-id="@car.Id">Details</a>
-                    <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@car.Id">Delete</a>
+
+                    @if (User.IsInRole("User") && car.IsAvailable)
+                    {
+                        <a class="btn btn-sm btn-success" asp-controller="Rental" asp-action="Create" asp-route-carId="@car.Id">Book</a>
+                    }
                 </td>
             </tr>
         }
